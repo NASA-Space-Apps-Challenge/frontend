@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { JulianDate, ClockRange, ClockStep } from "cesium";
 import { Viewer, Clock, Globe } from "resium";
 import ListOfEntities from "./components/ListOfEntities";
