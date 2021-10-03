@@ -17,7 +17,7 @@ export default function App() {
         stopTime={stop}
         clockRange={ClockRange.LOOP_STOP} // loop when we hit the end time
         clockStep={ClockStep.SYSTEM_CLOCK_MULTIPLIER}
-        multiplier={20} // how much time to advance each tick
+        multiplier={1} // how much time to advance each tick
         shouldAnimate={true} // Animation on by default
       />
       <ListOfEntities
