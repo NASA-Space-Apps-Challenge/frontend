@@ -15,21 +15,26 @@ const ListOfEntities = (props) => {
   const [positions, setPositions] = useState([]);
 
   useEffect(() => {
-    getPoints().then((points) => {
-      let ulti = [];
-      points.forEach(([name, tl1, tl2]) => {
-        const res = calculatePositions({ name, tl1, tl2, ...props });
-        console.log(res);
-        ulti.push(res);
+    (async () => {
+      let points = await getPoints();
+
+      let newData = points.map(([name, tl1, tl2]) => {
+        const res = calculatePositions({ tl1, tl2, ...props });
+        return {
+          name,
+          position: res,
+        };
       });
-      setPositions(ulti);
-    });
+
+      console.log(newData);
+      setPositions(newData);
+    })();
   }, [props]);
 
   return (
     <Suspense fallback={"asdf"}>
       {positions.map((position) => (
-        <Entity position={position} />
+        <Entity {...position} key={position.name} />
       ))}
     </Suspense>
   );
