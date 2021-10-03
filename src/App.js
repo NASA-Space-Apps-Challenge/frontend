@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Cartesian3, Color } from "cesium";
+import { Cartesian3, Color, JulianDate } from "cesium";
 import { Viewer, Entity } from "resium";
 import * as satellite from "satellite.js";
 
@@ -57,27 +57,20 @@ export default function App() {
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const res = getPosition(tle_l1, tle_l2);
-      console.log(res);
-      setLongitude(res.longitude);
-      setLatitude(res.latitude);
-      setHeight(res.height);
-    }, 100);
-    return () => clearInterval(interval);
+    const res = getPosition(tle_l1, tle_l2);
+    console.log(res);
+    setLongitude(res.longitude);
+    setLatitude(res.latitude);
+    setHeight(res.height);
   }, []);
 
   return (
     <Viewer full>
-      {longitude ? (
-        <Entity
-          name="satelite jr"
-          position={Cartesian3.fromDegrees(longitude, latitude, height)}
-          point={{ pixelSize: 10, color: Color.Red }}
-        />
-      ) : (
-        <div></div>
-      )}
+      <Entity
+        name="satelite jr"
+        position={Cartesian3.fromDegrees(longitude, latitude, height)}
+        point={{ pixelSize: 10, color: Color.RED }}
+      />
     </Viewer>
   );
 }
