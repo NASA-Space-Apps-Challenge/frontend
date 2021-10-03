@@ -1,10 +1,11 @@
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import Entity from "../Entity";
 import calculatePositions from "../../utils/calculatePositions";
 import getPoints from "../../utils/getPoints";
 
 const ListOfEntities = (props) => {
   const [positions, setPositions] = useState([]);
+  // const [limit, setLimit] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -20,15 +21,11 @@ const ListOfEntities = (props) => {
 
       setPositions(newData);
     })();
-  }, [props]);
+  }, [positions, props]);
 
-  return (
-    <Suspense fallback={"asdf"}>
-      {positions.map((position) => (
-        <Entity {...position} key={position.name} />
-      ))}
-    </Suspense>
-  );
+  return positions.map((position) => (
+    <Entity {...position} key={position.name} />
+  ));
 };
 
 export default ListOfEntities;
