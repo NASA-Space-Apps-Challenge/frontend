@@ -22,12 +22,8 @@ async function getElements(props) {
 
 const ListOfEntities = (props) => {
   const [positions, setPositions] = useState([]);
-  const [closeloading, setCloseLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   // const [limit, setLimit] = useState(0);
-  let clickHandler = () => {
-    setCloseLoading(true);
-  };
 
   useEffect(() => {
     (async () => {
@@ -37,8 +33,8 @@ const ListOfEntities = (props) => {
     })();
   }, [props]);
 
-  if (!closeloading) {
-    return <Loading clickHandler={clickHandler} isLoading={isLoading} />;
+  if (isLoading) {
+    return <Loading isLoading={isLoading} />;
   }
 
   return positions.map((position) => (
