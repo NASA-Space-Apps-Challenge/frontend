@@ -1,28 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Cartesian3, Color, JulianDate } from "cesium";
-import { Viewer, Entity } from "resium";
+import {
+  Cartesian3,
+  Color,
+  JulianDate,
+  SampledPositionProperty,
+  ClockRange,
+  ClockStep,
+} from "cesium";
+import { Viewer, Entity, Clock } from "resium";
 import * as satellite from "satellite.js";
 
 const getPoints = async () => {
-  let data = await fetch("https://celestrak.com/NORAD/elements/active.txt", {
-    mode: "no-cors",
-  }).then((response) => response.text());
-
-  data
-    .split(/\r?\n/)
-    .reduce(
-      (r, e, i) => (i % 3 ? r[r.length - 1].push(e) : r.push([e])) && r,
-      []
-    )
-    .map((x) => {
-      x[0] = x[0].trim();
-      return x;
-    });
+  return await fetch("https://api.milkywey.rocks/").then((response) =>
+    response.json()
+  );
 };
 
-const getPosition = (tle_l1, tle_l2) => {
+const getPosition = (tle_l1, tle_l2, jsDate) => {
   const satrec = satellite.twoline2satrec(tle_l1, tle_l2);
-  const positionAndVelocity = satellite.propagate(satrec, new Date());
+  const positionAndVelocity = satellite.propagate(satrec, jsDate);
   const positionEci = positionAndVelocity.position;
   // var velocityEci = positionAndVelocity.velocity;
   // var observerGd = {
@@ -30,7 +26,7 @@ const getPosition = (tle_l1, tle_l2) => {
   //   latitude: satellite.degreesToRadians(36.9613422),
   //   height: 0.37,
   // };
-  const gmst = satellite.gstime(new Date());
+  const gmst = satellite.gstime(jsDate);
 
   // var positionEcf = satellite.eciToEcf(positionEci, gmst);
   // var lookAngles = satellite.ecfToLookAngles(observerGd, positionEcf);
@@ -52,23 +48,51 @@ let tle_l2 =
   "2 00900  90.1693  36.2849 0028983  80.6350 341.5474 13.73592980835239";
 
 export default function App() {
-  const [longitude, setLongitude] = useState(0);
-  const [latitude, setLatitude] = useState(0);
-  const [height, setHeight] = useState(0);
+  getPoints();
+  const [position, setPosition] = useState();
+  const [startTime, setStartTime] = useState();
+  const [stopTime, setStopTime] = useState();
+  const [currentTime, setCurrentTime] = useState();
 
   useEffect(() => {
-    const res = getPosition(tle_l1, tle_l2);
-    console.log(res);
-    setLongitude(res.longitude);
-    setLatitude(res.latitude);
-    setHeight(res.height);
+    const totalSeconds = 60 * 60 * 6;
+    const timestepInSeconds = 10;
+    const start = JulianDate.fromDate(new Date());
+    setStartTime(start);
+    const stop = JulianDate.addSeconds(start, totalSeconds, new JulianDate());
+    setStopTime(stop);
+    setCurrentTime(start);
+    const positionsOverTime = new SampledPositionProperty();
+
+    for (let i = 0; i < totalSeconds; i += timestepInSeconds) {
+      const time = JulianDate.addSeconds(start, i, new JulianDate());
+      const jsDate = JulianDate.toDate(time);
+      const res = getPosition(tle_l1, tle_l2, jsDate);
+      const position = Cartesian3.fromDegrees(
+        res.longitude,
+        res.latitude,
+        res.height
+      );
+      positionsOverTime.addSample(time, position);
+    }
+    console.log(positionsOverTime);
+    setPosition(positionsOverTime);
   }, []);
 
   return (
     <Viewer full>
+      <Clock
+        startTime={startTime}
+        currentTime={currentTime}
+        stopTime={stopTime}
+        clockRange={ClockRange.LOOP_STOP} // loop when we hit the end time
+        clockStep={ClockStep.SYSTEM_CLOCK_MULTIPLIER}
+        multiplier={20} // how much time to advance each tick
+        shouldAnimate={true} // Animation on by default
+      />
       <Entity
         name="satelite jr"
-        position={Cartesian3.fromDegrees(longitude, latitude, height)}
+        position={position}
         point={{ pixelSize: 10, color: Color.RED }}
       />
     </Viewer>
