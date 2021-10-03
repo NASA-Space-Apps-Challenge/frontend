@@ -5,7 +5,7 @@ import ListOfEntities from "./components/ListOfEntities";
 
 export default function App() {
   const start = JulianDate.fromDate(new Date());
-  const totalSeconds = 60 * 60;
+  const totalSeconds = 60 * 30;
   const stop = JulianDate.addSeconds(start, totalSeconds, new JulianDate());
   const timestepInSeconds = 20;
 

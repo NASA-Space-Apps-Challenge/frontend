@@ -6,7 +6,7 @@ const EntityComponent = ({ name, position }) => {
     <Entity
       name={name}
       position={position}
-      point={{ pixelSize: 10, color: Color.RED }}
+      point={{ pixelSize: 5, color: Color.PURPLE }}
     ></Entity>
   );
 };
