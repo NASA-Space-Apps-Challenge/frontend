@@ -1,8 +1,8 @@
-const getPoints = async () => {
+const getPoints = async (limit = 0) => {
   let response = await fetch("https://api.milkywey.rocks/").then((response) =>
     response.json()
   );
-  response = response.slice(0, 3);
+  response = response.slice(limit, limit + 5);
 
   return response;
 };
