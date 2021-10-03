@@ -5,12 +5,12 @@ import ListOfEntities from "./components/ListOfEntities";
 
 export default function App() {
   const start = JulianDate.fromDate(new Date());
-  const totalSeconds = 60 * 60 * 6;
+  const totalSeconds = 60 * 60;
   const stop = JulianDate.addSeconds(start, totalSeconds, new JulianDate());
-  const timestepInSeconds = 10;
+  const timestepInSeconds = 20;
 
   return (
-    <Viewer full>
+    <Viewer geocoder={false} full>
       <Clock
         startTime={start}
         currentTime={start}

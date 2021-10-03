@@ -7,7 +7,7 @@ const EntityComponent = ({ name, position }) => {
       name={name}
       position={position}
       point={{ pixelSize: 10, color: Color.RED }}
-    />
+    ></Entity>
   );
 };
 

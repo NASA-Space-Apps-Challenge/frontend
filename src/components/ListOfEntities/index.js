@@ -5,13 +5,15 @@ import getPoints from "../../utils/getPoints";
 
 const ListOfEntities = (props) => {
   const [positions, setPositions] = useState([]);
+  const [loading, setLoading] = useState(true);
   // const [limit, setLimit] = useState(0);
 
   useEffect(() => {
+    setLoading(true);
     (async () => {
       let rawData = await getPoints();
 
-      let newData = rawData.map(([name, tl1, tl2]) => {
+      let newData = await rawData.map(([name, tl1, tl2]) => {
         const res = calculatePositions({ tl1, tl2, ...props });
         return {
           name,
@@ -20,8 +22,13 @@ const ListOfEntities = (props) => {
       });
 
       setPositions(newData);
+      setLoading(false);
     })();
-  }, [positions, props]);
+  }, [props]);
+
+  if (loading) {
+    return "Loading...";
+  }
 
   return positions.map((position) => (
     <Entity {...position} key={position.name} />
