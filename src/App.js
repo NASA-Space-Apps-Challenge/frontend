@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { JulianDate, ClockRange, ClockStep } from "cesium";
-import { Viewer, Clock } from "resium";
+import { Viewer, Clock, Globe } from "resium";
 import ListOfEntities from "./components/ListOfEntities";
 
 export default function App() {
@@ -11,6 +11,7 @@ export default function App() {
 
   return (
     <Viewer geocoder={false} full>
+      <Globe enableLighting={true} />
       <Clock
         startTime={start}
         currentTime={start}
