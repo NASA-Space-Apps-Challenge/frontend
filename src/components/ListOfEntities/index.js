@@ -7,9 +7,11 @@ import Loading from "../Loading";
 async function getElements(props) {
   let rawData = await getPoints();
 
-  let newData = await rawData.map(([name, tl1, tl2]) => {
+  let newData = await rawData.map(([id, name, tl1, tl2, description]) => {
     const res = calculatePositions({ tl1, tl2, ...props });
     return {
+      id,
+      description,
       name,
       position: res,
     };
@@ -40,7 +42,7 @@ const ListOfEntities = (props) => {
   }
 
   return positions.map((position) => (
-    <Entity {...position} key={position.name} />
+    <Entity {...position} key={position.id} />
   ));
 };
 

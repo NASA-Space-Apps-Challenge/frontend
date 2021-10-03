@@ -1,7 +1,10 @@
 const getPoints = async (limit = 0) => {
-  let response = await fetch("https://api.milkywey.rocks/").then((response) =>
-    response.json()
-  );
+  let response = await fetch("data/data.json", {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  }).then((response) => response.json());
 
   return response;
 };
