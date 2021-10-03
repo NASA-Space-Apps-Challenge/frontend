@@ -23,7 +23,7 @@ const calculatePositions = ({
     }
     return positionsOverTime;
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 };
 
