@@ -4,9 +4,9 @@ const Loading = ({ clickHandler, isLoading }) => {
     <Div>
       <h1>Mapping Space Trash in Real Time</h1>
       {isLoading ? (
-        <p>Your content is Loading, Please Wait...</p>
+        <p>Your content is loading, Please Wait...</p>
       ) : (
-        <button onClick={() => clickHandler()}>Cerrar</button>
+        <button onClick={() => clickHandler()}>Close</button>
       )}
     </Div>
   );
