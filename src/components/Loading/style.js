@@ -14,14 +14,11 @@ export const Div = styled.div`
 `;
 
 export const Iframe = styled.iframe`
-  width: 70%;
   display: block;
   margin: 0px auto;
-  aspect-ratio: 16/9;
-
-  @media (min-width: 1500px) {
-    width: 100%;
-  }
+  border: none;
+  width: 100%;
+  height: 50vh;
 `;
 
 export const Button = styled.button`
