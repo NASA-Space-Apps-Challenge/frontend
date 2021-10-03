@@ -20,6 +20,32 @@ const getPoints = async () => {
     });
 };
 
+const getPosition = (tle_l1, tle_l2) => {
+  const satrec = satellite.twoline2satrec(tle_l1, tle_l2);
+  const positionAndVelocity = satellite.propagate(satrec, new Date());
+  const positionEci = positionAndVelocity.position;
+  // var velocityEci = positionAndVelocity.velocity;
+  // var observerGd = {
+  //   longitude: satellite.degreesToRadians(-122.0308),
+  //   latitude: satellite.degreesToRadians(36.9613422),
+  //   height: 0.37,
+  // };
+  const gmst = satellite.gstime(new Date());
+
+  // var positionEcf = satellite.eciToEcf(positionEci, gmst);
+  // var lookAngles = satellite.ecfToLookAngles(observerGd, positionEcf);
+  const positionGd = satellite.eciToGeodetic(positionEci, gmst);
+  const longitudeRad = positionGd.longitude;
+  const latitudeRad = positionGd.latitude;
+  // heightRad = positionGd.height;
+
+  return {
+    longitude: satellite.degreesLong(longitudeRad),
+    latitude: satellite.degreesLat(latitudeRad),
+    height: positionGd.height * 1000,
+  };
+};
+
 let tle_l1 =
   "1 00900U 64063C   21275.38340667  .00000269  00000-0  27775-3 0  9990";
 let tle_l2 =
@@ -32,27 +58,11 @@ export default function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      var satrec = satellite.twoline2satrec(tle_l1, tle_l2);
-      var positionAndVelocity = satellite.propagate(satrec, new Date());
-      var positionEci = positionAndVelocity.position;
-      // var velocityEci = positionAndVelocity.velocity;
-      var observerGd = {
-        longitude: satellite.degreesToRadians(-122.0308),
-        latitude: satellite.degreesToRadians(36.9613422),
-        height: 0.37,
-      };
-      var gmst = satellite.gstime(new Date());
-
-      var positionEcf = satellite.eciToEcf(positionEci, gmst);
-      var lookAngles = satellite.ecfToLookAngles(observerGd, positionEcf);
-      var positionGd = satellite.eciToGeodetic(positionEci, gmst);
-      var longitudeRad = positionGd.longitude,
-        latitudeRad = positionGd.latitude,
-        heightRad = positionGd.height;
-
-      setLongitude(satellite.degreesLong(longitudeRad));
-      setLatitude(satellite.degreesLat(latitudeRad));
-      setHeight(positionGd.height * 1000);
+      const res = getPosition(tle_l1, tle_l2);
+      console.log(res);
+      setLongitude(res.longitude);
+      setLatitude(res.latitude);
+      setHeight(res.height);
     }, 100);
     return () => clearInterval(interval);
   }, []);
