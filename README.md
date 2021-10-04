@@ -3,7 +3,7 @@
 Do you enjoy looking at the sky and seeing all the stars? That may not be possible in the future, as the amount of space debris is constantly growing and creating a layer of trash that may block us from seeing outside our planet and even leaving it.
 Space debris travels at a median speed of 16,000 mph, and if it collides with an active satellite it could have catastrophic consequences. 
 
-Our project allows anyone to visualize the amount of debris that orbits the earth, and aims to raise awareness of the problem it represents and to serve as a tool for future initiatives.
+Our project allows anyone to visualize the amount of debris that orbits the earth, and aims to raise awareness of the problem it represents and to serve as a tool for future initiatives. 
 
 ## Demo
 
