@@ -1,11 +1,19 @@
 # Milk Æ Wey SDV (Space Debris Visualizer)
 
+<img align="right" width="150" height="150"
+     alt="Logo"
+     src="https://user-images.githubusercontent.com/18373185/135788011-ccd0d816-943e-4dde-bd9e-76f50abdfa40.png">
+
 Do you enjoy looking at the sky and seeing all the stars? That may not be possible in the future, as the amount of space debris is constantly growing and creating a layer of trash that may block us from seeing outside our planet and even leaving it.
 Space debris travels at a median speed of 16,000 mph, and if it collides with an active satellite it could have catastrophic consequences. 
 
 Our project allows anyone to visualize the amount of debris that orbits the earth, and aims to raise awareness of the problem it represents and to serve as a tool for future initiatives. 
 
 ## Demo
+
+https://www.youtube.com/watch?v=ftqKBi-OW68
+
+## Live project
 
 [https://milkywey.rocks](https://milkywey.rocks)
 
