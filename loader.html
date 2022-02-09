@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loading</title>
+  </head>
+  <style>
+    body {
+      width: 90%;
+      margin: 0px auto;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .lds-ring {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    .lds-ring div {
+      box-sizing: border-box;
+      display: block;
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      margin: 8px;
+      border: 8px solid #fff;
+      border-radius: 50%;
+      animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      border-color: #fff transparent transparent transparent;
+    }
+    .lds-ring div:nth-child(1) {
+      animation-delay: -0.45s;
+    }
+    .lds-ring div:nth-child(2) {
+      animation-delay: -0.3s;
+    }
+    .lds-ring div:nth-child(3) {
+      animation-delay: -0.15s;
+    }
+    @keyframes lds-ring {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    h1,
+    p {
+      color: #fff;
+    }
+  </style>
+  <body>
+    <h1>Locating Space Debris</h1>
+    <p>Please wait...</p>
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </body>
+</html>
